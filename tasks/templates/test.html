@@ -10,11 +10,13 @@
     <title>Document</title>
 </head>
 <body>
-    <h1 class="H1"> Hello World! </h1>
-
-    <img src="{% static "images/image.jpg" %}" alt="">
 
 
-    <script src="{% static "js/main.js" %}"></script>
+    {{ names.0 }}
+
+    {% for name in names %}
+        <h1> {{ name }} </h1>
+    {% endfor %}
+
 </body>
 </html>
