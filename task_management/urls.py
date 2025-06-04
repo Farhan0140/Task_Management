@@ -16,10 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from tasks.views import manager_dashboard, user_dashboard, test
+from tasks.views import *
 
 urlpatterns = [
     path("", test),
     path("manager_dashboard/", manager_dashboard),
     path("user_dashboard/", user_dashboard),
+    path("create_task/", create_task)
 ]
