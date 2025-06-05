@@ -8,6 +8,9 @@ class Employee(models.Model):
     email = models.EmailField(unique=True)
     # task_set
 
+    def __str__(self):
+        return self.name
+
 
 class Task(models.Model):
     project = models.ForeignKey(    # Many To One Relationship
