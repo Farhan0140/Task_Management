@@ -16,7 +16,7 @@ class Task_Form(forms.Form):
         widget=forms.SelectDateWidget,
         label="Due Date"
     )
-    assign_to = forms.MultipleChoiceField(
+    assigned_to = forms.MultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
         label="Assign To"
     )
@@ -27,7 +27,7 @@ class Task_Form(forms.Form):
         super().__init__(*args, **kwargs) # Unpack 
 
         # print(self.fields)
-        self.fields['assign_to'].choices = [(emp.id, emp.name) for emp in employees]
+        self.fields['assigned_to'].choices = [(emp.id, emp.name) for emp in employees]
 
 
 
@@ -72,15 +72,15 @@ class Task_Model_Form( Style_Form_Mixins, forms.ModelForm ):
 
 
     class Meta:
-        model = Task
+        model = Tasks
         # fields = '__all__'
-        fields = ['title', 'description', 'due_date', 'assign_to']
+        fields = ['title', 'description', 'due_date', 'assigned_to']
         # exclude = ['project', 'is_completed' ......]
 
         widgets = {
             
             'due_date': forms.SelectDateWidget(),
-            'assign_to': forms.CheckboxSelectMultiple()
+            'assigned_to': forms.CheckboxSelectMultiple()
 
             # Reduce Redundancy Using Mixins
 

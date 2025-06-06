@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from debug_toolbar.toolbar import debug_toolbar_urls
 from tasks.views import *
 
 urlpatterns = [
@@ -23,4 +24,4 @@ urlpatterns = [
     path("manager_dashboard/", manager_dashboard),
     path("user_dashboard/", user_dashboard),
     path("create_task/", create_task)
-]
+] + debug_toolbar_urls()
