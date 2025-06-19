@@ -16,17 +16,22 @@
         {% csrf_token %}
 
         <div class="w-1/2 mx-auto mt-8">
-            <div>
-                {% if  massage  %}
-                    <p class="font-semibold text-lg">{{ massage }}</p>
-                {% endif %}
-            </div>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="p-3 {% if message.tags == 'success' %}bg-green-500{% endif %} ">
+                        <h1 class=" text-white font-extrabold text-center">
+                            {{ message }}
+                        </h1>
+                    </div>
+                {% endfor %}
+            {% endif %}
             
-            {{ form.as_p }}
+            {{ task.as_p }}
+            {{ task_detail.as_p }}
             
             <button type="submit" class="p-3 border border-gray-400 bg-gray-300 hover:bg-gray-500 hover:text-white rounded-lg font-semibold mt-2">Submit</button>
         </div>
-        <div class="border-2 rounded-lg border-gray-300 p-3 w-full px-3 mt-2 bg-gray-200 font-semibold hidden"></div>
+        <div class="border-2 rounded-lg border-gray-300 p-2 w-full px-3 mt-2 bg-gray-200 font-semibold hidden"></div>
     </form>
 </body>
 </html>

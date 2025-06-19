@@ -21,7 +21,9 @@ from tasks.views import *
 
 urlpatterns = [
     path("", test),
-    path("manager_dashboard/", manager_dashboard),
+    path("manager_dashboard/", manager_dashboard, name="manager_dashboard"),
     path("user_dashboard/", user_dashboard),
-    path("create_task/", create_task)
+    path("create_task/", create_task, name="create_task"),
+    path("update_task/<int:id>/", update_task, name="update_task"),
+    path("delete_task/<int:id>/", delete_task, name="delete_task")
 ] + debug_toolbar_urls()
