@@ -2,6 +2,10 @@
 from django import forms
 
 class Style_Form_Mixins:
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.apply_widget_styles()
 
     default_classes = "border-2 rounded-lg border-gray-300 p-2"
 
@@ -39,11 +43,6 @@ class Style_Form_Mixins:
 from tasks.models import Tasks, Task_Detail
 
 class Task_Model_Form( Style_Form_Mixins, forms.ModelForm ):
-    
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.apply_widget_styles()
-
 
     class Meta:
         model = Tasks
@@ -60,7 +59,3 @@ class Task_Detail_Form( Style_Form_Mixins, forms.ModelForm ):
     class Meta:
         model = Task_Detail
         fields = ['priority', 'notes']
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.apply_widget_styles()

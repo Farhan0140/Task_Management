@@ -4,6 +4,9 @@
 
 {% block tasks_table %}
 
+{% if user.is_authenticated %}
+  <h1>HIIIIASDSDSD {{user}} </h1>
+{% endif %}
 
 <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-4">
   <div class="mt-10 bg-white shadow-xl rounded-lg p-4">
@@ -111,5 +114,10 @@
 
   </div>
 </div>
+
+<form action="{% url "sign_out" %}" method="POST">
+  {% csrf_token %}
+  <button type="submit">Sign out</button>
+</form>
 
 {% endblock tasks_table %}

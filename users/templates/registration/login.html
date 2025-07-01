@@ -1,0 +1,36 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "css/output.css" %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="w-1/2 mx-auto mt-8">
+
+        <div>
+            {% if messages %}
+                {% for massage in messages %}
+                    <h1>{{massage}}</h1>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div>
+            <form action="" method="POST" class="flex flex-col">
+                {% csrf_token %}
+
+                <input type="text" name="user_name" placeholder="Enter user name: " class="p-3 mb-3 border rounded-lg">
+                <input type="password" name="password" placeholder="Enter Your password: " class="p-3 mb-3 border rounded-lg">
+                
+                <button type="submit" class="border bg-blue-400 text-white p-3 rounded-lg"> Sign In </button>
+            </form>
+        </div>
+
+    </div>
+</body>
+</html>

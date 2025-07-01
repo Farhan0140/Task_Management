@@ -6,4 +6,5 @@ postcss.config.js
 package.json
 package-lock.json
 css/output.css
-static/css/
+static/
+.env
