@@ -69,3 +69,12 @@ def sign_out(request):
     
     return redirect("sign_in")
     
+
+def admin_dashboard(request):
+    users = User.objects.all()
+
+    context = {
+        "users" : users,
+    }
+    return render(request, "admin/dashboard.html", context)
+
