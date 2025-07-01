@@ -24,10 +24,9 @@
             <form action="" method="POST" class="flex flex-col">
                 {% csrf_token %}
 
-                <input type="text" name="user_name" placeholder="Enter user name: " class="p-3 mb-3 border rounded-lg">
-                <input type="password" name="password" placeholder="Enter Your password: " class="p-3 mb-3 border rounded-lg">
+                {{ form }}
                 
-                <button type="submit" class="border bg-blue-400 text-white p-3 rounded-lg"> Sign In </button>
+                <button type="submit" class="border bg-gray-400 text-white p-3 rounded-lg mt-5"> Sign In </button>
             </form>
         </div>
 

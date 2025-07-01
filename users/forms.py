@@ -4,6 +4,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from tasks.forms import Style_Form_Mixins
+from django.contrib.auth.forms import AuthenticationForm 
 
 class Register_form(UserCreationForm):
     class Meta:
@@ -72,3 +73,9 @@ class CustomRegisterForm(Style_Form_Mixins, forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+class CustomLoginForm(Style_Form_Mixins, AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+

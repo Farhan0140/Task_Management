@@ -16,6 +16,11 @@ class Style_Form_Mixins:
                     'class': f"{self.default_classes} px-3 w-full",
                     'placeholder': f"Enter {field.label} Name"
                 })
+            elif isinstance( field.widget, forms.PasswordInput):
+                field.widget.attrs.update({
+                    'class': f"{self.default_classes} px-3 w-full",
+                    'placeholder': f"Enter {field.label} Name"
+                })
             elif isinstance( field.widget, forms.Textarea):
                 field.widget.attrs.update({
                     'class': f"{self.default_classes} px-3 mt-2 w-full",
