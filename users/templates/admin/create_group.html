@@ -1,0 +1,43 @@
+{% extends "admin/dashboard.html" %}
+{% block content %}
+    <div class='w-1/2 mx-auto my-8'>
+        <ul>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="p-3 {% if message.tags == 'success' %}bg-green-500{% endif %} ">
+                        <h1 class=" text-white font-extrabold text-center">
+                            {{ message }}
+                        </h1>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </ul>
+        <form method='POST'>
+            {% csrf_token %}
+            <button type="button" onclick="select_all()" class="button_submit">Select All</button>
+            {{form}}
+            <button type="submit" class="button_submit mb-10">Create Group</button>
+        </form>
+    </div>
+
+    <script>
+
+        const select_all = () => {
+            const id_permissions = document.getElementById('id_permissions');
+            const main_len = id_permissions.children.length;
+
+            for(let i=0; i<main_len; i++) {
+                const id = `id_permissions_${i}`;
+                const select = document.getElementById(id);
+                
+                if(select.checked) {
+                    select.checked = false;
+                } else {
+                    select.checked = true;
+                }
+            }
+        }
+
+    </script>
+
+{% endblock content %}

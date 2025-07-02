@@ -4,7 +4,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
-from users.forms import CustomRegisterForm, CustomLoginForm, assignRoleForm
+from users.forms import CustomRegisterForm, CustomLoginForm, assignRoleForm, CreateGroupForm
 
 
 # Create your views here.
@@ -95,3 +95,16 @@ def Assign_role(request, user_id):
     
     return render(request, "admin/assign_role.html", {"form": form})
 
+
+
+def create_group(request):
+    form = CreateGroupForm()
+
+    if request.method == "POST":
+        form = CreateGroupForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"The {form.cleaned_data.get('name')} was created successfully")
+            return redirect('create_group')
+    
+    return render(request, "admin/create_group.html", {"form": form})
