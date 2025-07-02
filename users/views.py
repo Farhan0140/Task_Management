@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
-from users.forms import CustomRegisterForm, CustomLoginForm
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
+from users.forms import CustomRegisterForm, CustomLoginForm, assignRoleForm
 
 
 # Create your views here.
@@ -77,4 +77,21 @@ def admin_dashboard(request):
         "users" : users,
     }
     return render(request, "admin/dashboard.html", context)
+
+
+def Assign_role(request, user_id):
+    user = User.objects.get(id=user_id)
+    form = assignRoleForm()
+
+    if request.method == 'POST':
+        form = assignRoleForm(request.POST)
+        if form.is_valid():
+            role = form.cleaned_data.get('role')
+
+            user.groups.clear()
+            user.groups.add(role)
+            messages.success(request, f"assigned {user.username} has been assign to {role.name} role")
+            return redirect('admin_dashboard')
+    
+    return render(request, "admin/assign_role.html", {"form": form})
 

@@ -1,5 +1,5 @@
 from django.urls import path
-from users.views import sign_up, sign_in, sign_out, activate_user, admin_dashboard
+from users.views import sign_up, sign_in, sign_out, activate_user, admin_dashboard, Assign_role
 
 urlpatterns = [
 
@@ -8,5 +8,6 @@ urlpatterns = [
     path("sign_out/", sign_out, name="sign_out"),
     path("activate/<int:user_id>/<str:token>/", activate_user),
     path("admin/dashboard/", admin_dashboard, name="admin_dashboard"),
+    path("admin/<int:user_id>/assign_role/", Assign_role, name="assign_role"),
 
 ]

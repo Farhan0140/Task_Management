@@ -45,7 +45,7 @@
                     <td class="px-4 py-4 whitespace-nowrap"> {{ user.groups.first.name|default:"Group not assigned" }} </td>     {% comment %} <QuerySet ['Admin', 'Manager']> {% endcomment %}
                     <td class="px-4 py-4 whitespace-nowrap">
                     <a
-                        href=""
+                        href="{% url "assign_role" user.id %}"
                         class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
                     >
                         Change Role
