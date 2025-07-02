@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.auth.tokens import default_token_generator
 from users.forms import CustomRegisterForm, CustomLoginForm, assignRoleForm, CreateGroupForm
 
@@ -108,3 +108,9 @@ def create_group(request):
             return redirect('create_group')
     
     return render(request, "admin/create_group.html", {"form": form})
+
+
+def view_group_list_with_permission(request):
+    groups = Group.objects.all()
+
+    return render(request, "admin/group_list.html", {"groups": groups})
