@@ -67,7 +67,7 @@ def create_task(request):
 
     if request.method == 'POST':
         task_form = Task_Model_Form(request.POST)
-        task_detail_form = Task_Detail_Form(request.POST)
+        task_detail_form = Task_Detail_Form(request.POST, request.FILES)
 
         if task_form.is_valid() and task_detail_form.is_valid():
             task = task_form.save()

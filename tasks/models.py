@@ -64,6 +64,7 @@ class Task_Detail(models.Model):
         related_name='details'
     )     # One TO One Relationship
 
+    task_image = models.ImageField(upload_to="task_images", blank=True, null=True)
     priority = models.CharField(max_length=1, choices=PRIORITY_OPTIONS, default=LOW)
     notes = models.TextField(blank=True, null=True)
 

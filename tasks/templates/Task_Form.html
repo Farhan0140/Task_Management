@@ -3,27 +3,27 @@
 {% block title %}Create task{% endblock title %}
 
 {% block content %}
-<form method="POST">
-    
-    {% csrf_token %}
-
-    <div class="w-1/2 mx-auto my-10">
+<div class="w-1/2 mx-auto my-10">
+    <div>
         {% if messages %}
-            {% for message in messages %}
-            <div class="p-3 {% if message.tags == 'success' %}bg-green-500{% endif %} ">
-                <h1 class=" text-white font-extrabold text-center">
-                    {{ message }}
-                </h1>
-            </div>
-            {% endfor %}
+        {% for message in messages %}
+        <div class="p-3 {% if message.tags == 'success' %}bg-green-500{% endif %} ">
+            <h1 class=" text-white font-extrabold text-center">
+                {{ message }}
+            </h1>
+        </div>
+        {% endfor %}
         {% endif %}
+    </div>
+    <form method="POST" enctype='multipart/form-data'>
+        {% csrf_token %}
             
         {{ task.as_p }}
         {{ task_detail.as_p }}
 
         <button type="submit" class="button_submit w-full">Submit</button>
-    </div>
+    </form>
     <div class="border-2 rounded-lg border-gray-300 p-2 w-full px-3 mt-2 bg-gray-200 font-semibold hidden"></div>
-</form>
+</div>
 
 {% endblock content %}

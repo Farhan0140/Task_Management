@@ -63,4 +63,4 @@ class Task_Model_Form( Style_Form_Mixins, forms.ModelForm ):
 class Task_Detail_Form( Style_Form_Mixins, forms.ModelForm ):
     class Meta:
         model = Task_Detail
-        fields = ['priority', 'notes']
+        fields = ['priority', 'notes', 'task_image']
