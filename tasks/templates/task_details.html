@@ -129,12 +129,10 @@
             </div>
         </div>
         <div>
-            <button
-            class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
-            type="submit"
-            >
-            Delete Task
-            </button>
+            <form action="{% url "delete_task" task.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">Delete</button>
+            </form>
         </div>
         </div>
     </div>
