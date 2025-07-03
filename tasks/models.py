@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Employees(models.Model):
     name = models.CharField(max_length=100)
@@ -23,8 +24,14 @@ class Tasks(models.Model):
         related_name='tasks'
     )
 
+    # assigned_to = models.ManyToManyField(
+    #     Employees,
+    #     related_name="tasks"
+    # )    # Many to Many Relationship
+
+
     assigned_to = models.ManyToManyField(
-        Employees,
+        User,
         related_name="tasks"
     )    # Many to Many Relationship
 
@@ -32,7 +39,6 @@ class Tasks(models.Model):
     description = models.TextField()
     due_date = models.DateField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='PENDING')
-    is_completed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
