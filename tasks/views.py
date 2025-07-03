@@ -4,12 +4,24 @@ from tasks.forms import Task_Model_Form, Task_Detail_Form
 from tasks.models import *
 from django.db.models import Count, Q
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
 
 # Create your views here.
 
-def test(request):  
-    return render(request, "Html Massages/successful.html")
+def no_permission(request):  
+    return render(request, "Html Massages/no_permission.html")
 
+
+def is_manager(user):
+    return user.groups.filter(name='Manager').exists()
+
+
+def is_employee(user):
+    return user.groups.filter(name='Employee').exists()
+
+
+@login_required(redirect_field_name='sign_in')
+@user_passes_test(is_manager, login_url='no_permission')
 def manager_dashboard(request):
 
     type = request.GET.get('type', 'all')
@@ -39,10 +51,15 @@ def manager_dashboard(request):
     return render(request, "dashboard/manager_dashboard.html", context)
 
 
-def user_dashboard(request):
+@login_required(redirect_field_name='sign_in')
+@user_passes_test(is_employee, login_url='no_permission')
+def employee_dashboard(request):
     return render(request, "dashboard/User_Dashboard.html")
 
 
+
+@login_required(redirect_field_name='sign_in')
+@permission_required("tasks.add_tasks", login_url='no_permission')
 def create_task(request):
     task_form = Task_Model_Form()
     task_detail_form = Task_Detail_Form()
@@ -66,6 +83,9 @@ def create_task(request):
     return render(request, "Task_Form.html", context)
 
 
+
+@login_required(redirect_field_name='sign_in')
+@permission_required("tasks.change_tasks", login_url='no_permission')
 def update_task(request, id):
 
     task = Tasks.objects.get(id = id)
@@ -90,6 +110,10 @@ def update_task(request, id):
     context = {'task':task_form, 'task_detail': task_detail_form}
     return render(request, "Task_Form.html", context)
 
+
+
+@login_required(redirect_field_name='sign_in')
+@permission_required("tasks.delete_tasks", login_url='no_permission')
 def delete_task(request, id):
     task = Tasks.objects.get(id=id)
 

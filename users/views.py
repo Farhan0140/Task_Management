@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.tokens import default_token_generator
 from users.forms import CustomRegisterForm, CustomLoginForm, assignRoleForm, CreateGroupForm
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 
 # Create your views here.
@@ -62,6 +63,7 @@ def sign_in(request):
     return render(request, "registration/login.html", {"form": form})
 
 
+@login_required
 def sign_out(request):
     if request.method == "POST":
         logout(request)
@@ -70,6 +72,11 @@ def sign_out(request):
     return redirect("sign_in")
     
 
+def is_admin(user):
+    return user.groups.filter(name='Admin').exists()
+
+
+@user_passes_test(is_admin, login_url='no_permission')
 def admin_dashboard(request):
     users = User.objects.all()
 
@@ -79,6 +86,7 @@ def admin_dashboard(request):
     return render(request, "admin/dashboard.html", context)
 
 
+@user_passes_test(is_admin, login_url='no_permission')
 def Assign_role(request, user_id):
     user = User.objects.get(id=user_id)
     form = assignRoleForm()
@@ -96,7 +104,7 @@ def Assign_role(request, user_id):
     return render(request, "admin/assign_role.html", {"form": form})
 
 
-
+@user_passes_test(is_admin, login_url='no_permission')
 def create_group(request):
     form = CreateGroupForm()
 
@@ -110,6 +118,7 @@ def create_group(request):
     return render(request, "admin/create_group.html", {"form": form})
 
 
+@user_passes_test(is_admin, login_url='no_permission')
 def view_group_list_with_permission(request):
     groups = Group.objects.all()
 
