@@ -122,3 +122,12 @@ def delete_task(request, id):
 
         messages.success(request, "Task Deleted Successfully")
         return redirect("manager_dashboard")
+
+
+
+@login_required(redirect_field_name='sign_in')
+@permission_required("tasks.view_task_detail", login_url='no_permission')
+def task_details(request, task_id):
+    task_detail = Tasks.objects.get(id = task_id)
+
+    return render(request, "task_details.html", {"task": task_detail})
