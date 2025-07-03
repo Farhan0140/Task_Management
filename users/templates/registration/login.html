@@ -1,35 +1,27 @@
+{% extends "base.html" %}
 
-{% load static %}
+{% block title %}Sign In{% endblock title %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static "css/output.css" %}">
-    <title>Document</title>
-</head>
-<body>
-    <div class="w-1/2 mx-auto mt-8">
+{% block content %}
+<div class="w-1/2 mx-auto my-8">
 
-        <div>
-            {% if messages %}
-                {% for massage in messages %}
-                    <h1>{{massage}}</h1>
-                {% endfor %}
-            {% endif %}
-        </div>
-
-        <div>
-            <form action="" method="POST" class="flex flex-col">
-                {% csrf_token %}
-
-                {{ form }}
-                
-                <button type="submit" class="border bg-gray-400 text-white p-3 rounded-lg mt-5"> Sign In </button>
-            </form>
-        </div>
-
+    <div>
+        {% if messages %}
+            {% for massage in messages %}
+                <h1>{{massage}}</h1>
+            {% endfor %}
+        {% endif %}
     </div>
-</body>
-</html>
+
+    <div>
+        <form action="" method="POST" class="flex flex-col">
+            {% csrf_token %}
+
+            {{ form }}
+            
+            <button type="submit" class="button_submit mt-4"> Sign In </button>
+        </form>
+    </div>
+
+</div>
+{% endblock content %}

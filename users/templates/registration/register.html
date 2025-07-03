@@ -1,54 +1,45 @@
+{% extends "base.html" %}
 
-{% load static %}
+{% block title %}Sign Up{% endblock title %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static "css/output.css" %}">
-    <title>Document</title>
-</head>
-<body>
-    <div class="w-1/2 mx-auto mt-8">
-        <h1>Hello User</h1>
+{% block content %}
+<div class="w-1/2 mx-auto mt-8">
 
-        <div>
-            {% if messages %}
-                {% for massage in messages %}
-                    <h1>{{massage}}</h1>
-                {% endfor %}
-            {% endif %}
-        </div>
-
-        {% if form.non_field_errors %}
-            <ul>
-                {% for error in form.non_field_errors %}
-                    <li>{{error}}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-
-        <form action="" method="POST">
-
-            {% csrf_token %}
-
-            {% for field in form %}
-                <p>
-                    <label for="{{field.id_for_label}}"> {{ field.label }} </label>
-                    {{ field }}
-
-                    {% if field.errors %}
-                        <ul>
-                            {% for error in field.errors %}
-                                <li>{{ error }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </p>
+    <div>
+        {% if messages %}
+            {% for massage in messages %}
+                <h1>{{massage}}</h1>
             {% endfor %}
-            <button type="submit"> Sign Up </button>
-        </form>
+        {% endif %}
     </div>
-</body>
-</html>
+
+    {% if form.non_field_errors %}
+        <ul>
+            {% for error in form.non_field_errors %}
+                <li>{{error}}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form action="" method="POST">
+
+        {% csrf_token %}
+
+        {% for field in form %}
+            <p>
+                <label for="{{field.id_for_label}}"> {{ field.label }} </label>
+                {{ field }}
+
+                {% if field.errors %}
+                    <ul>
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </p>
+        {% endfor %}
+        <button type="submit" class="button_submit my-4 w-full"> Sign Up </button>
+    </form>
+</div>
+{% endblock content %}
