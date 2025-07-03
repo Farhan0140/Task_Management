@@ -49,7 +49,7 @@
       {% endif %}
       <div class="flex -space-x-3">
         {% for emp in tsk.assigned_to.all %}
-          <div class="w-10 h-10 bg-blue-500 text-white rounded-full border-2 border-white flex justify-center items-center"> {{ emp.name|slice:':2' }} </div>
+          <div class="w-10 h-10 bg-blue-500 text-white rounded-full border-2 border-white flex justify-center items-center"> {{ emp.first_name|slice:':2' }} </div>
         {% endfor %}
       </div>
       <div class="text-gray-500 flex justify-between"> 
