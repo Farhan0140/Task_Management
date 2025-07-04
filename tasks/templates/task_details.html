@@ -28,21 +28,21 @@
         Task Detail
     </button>
     <div class="flex items-center gap-2">
-        <select
-        name="task_status"
-        id="task_status"
-        class="px-4 py-2 border rounded-md"
-        >
-        <option value="pending">Pending</option>
-        <option value="in_progress">In Progress</option>
-        <option value="completed">Completed</option>
-        </select>
-        <button
-        class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-        type="submit"
-        >
-        Change Status
-        </button>
+
+
+        <form method="post">
+            {% csrf_token %}
+            <select name="Task_Status" id="task_status" class="px-4 py-2 border rounded-md">
+                {% for value, label in status_choices %}
+                    <option value="{{value}}">{{label}}</option>
+                {% endfor %}
+            </select>
+            <button class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600" type="submit" >
+                Change Status
+            </button>
+        </form>
+
+
     </div>
     </div>
 
@@ -128,11 +128,14 @@
 
             </div>
         </div>
-        <div>
-            <form action="{% url "delete_task" task.id %}" method="POST">
-                {% csrf_token %}
-                <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">Delete</button>
-            </form>
+        <div class="flex">
+          <a href="{% url "update_task" task.id %}" class="px-4 py-2 mr-3 bg-blue-500 text-white rounded-md hover:bg-blue-600"> Edit </a>
+          
+          <form action="{% url "delete_task" task.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">Delete</button>
+          </form>
+            
         </div>
         </div>
     </div>

@@ -129,5 +129,12 @@ def delete_task(request, id):
 @permission_required("tasks.view_task_detail", login_url='no_permission')
 def task_details(request, task_id):
     task_detail = Tasks.objects.get(id = task_id)
+    status_choices = Tasks.STATUS_CHOICES
 
-    return render(request, "task_details.html", {"task": task_detail})
+    if request.method == "POST":
+        selected_status = request.POST.get('Task_Status')
+        task_detail.status = selected_status
+        task_detail.save()
+        return redirect('task_detail', task_detail.id)
+
+    return render(request, "task_details.html", {"task": task_detail, "status_choices": status_choices})

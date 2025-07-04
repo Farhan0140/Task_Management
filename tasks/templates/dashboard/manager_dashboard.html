@@ -54,13 +54,6 @@
       </div>
       <div class="text-gray-500 flex justify-between"> 
         {{ tsk.created_at|timesince }} 
-
-        
-        <div class="flex flex-col">
-          <a href="{% url "update_task" tsk.id %}" class="border-2 rounded-md bg-blue-400 p-2 text-white"> Edit </a>
-        </div>
-
-
       </div>
     </div>
   {% endfor %}
