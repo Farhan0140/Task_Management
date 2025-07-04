@@ -5,6 +5,7 @@ from tasks.models import *
 from django.db.models import Count, Q
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
+from users.views import is_admin
 
 # Create your views here.
 
@@ -138,3 +139,15 @@ def task_details(request, task_id):
         return redirect('task_detail', task_detail.id)
 
     return render(request, "task_details.html", {"task": task_detail, "status_choices": status_choices})
+
+
+def dashboard(request):
+    user = request.user
+    if is_admin(user):
+        return redirect("admin_dashboard")
+    elif is_manager(user):
+        return redirect("manager_dashboard")
+    elif is_employee(user):
+        return redirect("employee_dashboard")
+    
+    return redirect("no_permission")
