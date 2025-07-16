@@ -6,6 +6,7 @@ from django.contrib.auth.models import User, Group
 from django.contrib.auth.tokens import default_token_generator
 from users.forms import CustomRegisterForm, CustomLoginForm, assignRoleForm, CreateGroupForm
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.views import LoginView
 
 
 # Create your views here.
@@ -61,6 +62,15 @@ def sign_in(request):
             return redirect("home")
         
     return render(request, "registration/login.html", {"form": form})
+
+
+class Sign_In( LoginView ):
+    form_class = CustomLoginForm
+
+    def get_success_url(self):
+        next_url = self.request.GET.get('next')
+        return next_url if next_url else super().get_success_url()
+
 
 
 @login_required
