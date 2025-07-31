@@ -1,5 +1,5 @@
 from django.urls import path
-from users.views import sign_up, sign_in, sign_out, activate_user, admin_dashboard, Assign_role, create_group, view_group_list_with_permission, Sign_In, User_Profile, Change_Password
+from users.views import sign_up, sign_in, sign_out, activate_user, admin_dashboard, Assign_role, create_group, view_group_list_with_permission, Sign_In, User_Profile, Change_Password, PasswordReset
 from django.contrib.auth.views import LogoutView, PasswordChangeDoneView
 
 urlpatterns = [
@@ -16,6 +16,7 @@ urlpatterns = [
     path("admin/view_group_list_with_permission/", view_group_list_with_permission, name="view_group"),
     path("profile/", User_Profile.as_view(), name="user_profile"),
     path("change_password/", Change_Password.as_view(), name="change_password"),
-    path("password_changed/done/", PasswordChangeDoneView.as_view(template_name="accounts/password_changed_done.html"), name="password_change_done")
+    path("password_changed/done/", PasswordChangeDoneView.as_view(template_name="accounts/password_changed_done.html"), name="password_change_done"),
+    path("password_reset/", PasswordReset.as_view(), name="reset_password")
 
 ]
