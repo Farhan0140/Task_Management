@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.auth.models import User, Group, Permission
 from django.contrib.auth.forms import UserCreationForm
 from tasks.forms import Style_Form_Mixins
-from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, PasswordResetForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm
 
 class Register_form(UserCreationForm):
     class Meta:
@@ -106,4 +106,8 @@ class CustomPasswordChangeForm( Style_Form_Mixins, PasswordChangeForm ):
 
 
 class CustomPasswordResetForm( Style_Form_Mixins, PasswordResetForm ):
+    pass
+
+
+class CustomPasswordResetConfirmForm( Style_Form_Mixins, SetPasswordForm ):
     pass

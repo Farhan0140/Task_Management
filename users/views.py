@@ -4,9 +4,9 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.tokens import default_token_generator
-from users.forms import CustomRegisterForm, CustomLoginForm, assignRoleForm, CreateGroupForm, CustomPasswordChangeForm, CustomPasswordResetForm
+from users.forms import CustomRegisterForm, CustomLoginForm, assignRoleForm, CreateGroupForm, CustomPasswordChangeForm, CustomPasswordResetForm, CustomPasswordResetConfirmForm
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordResetView
+from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordResetView, PasswordResetConfirmView
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 
@@ -164,8 +164,25 @@ class PasswordReset( PasswordResetView ):
     template_name = 'registration/reset_password.html'
     success_url = reverse_lazy('sign_in')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["protocol"] = "https" if self.request.is_secure() else "http"
+        context["domain"] = self.request.get_host()
+        return context
+    
+
     def form_valid(self, form):
         messages.success(self.request, "A reset email send, Please check your email")
 
         return super().form_valid(form)
     
+
+class Confirm_Reset_Password( PasswordResetConfirmView ):
+    form_class = CustomPasswordResetConfirmForm
+    template_name = 'registration/reset_password.html'
+    success_url = reverse_lazy('sign_in')
+
+    def form_valid(self, form):
+        messages.success(self.request, "Password Reset Successfully")
+
+        return super().form_valid(form)
