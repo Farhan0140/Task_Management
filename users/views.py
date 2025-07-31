@@ -4,9 +4,9 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.tokens import default_token_generator
-from users.forms import CustomRegisterForm, CustomLoginForm, assignRoleForm, CreateGroupForm
+from users.forms import CustomRegisterForm, CustomLoginForm, assignRoleForm, CreateGroupForm, CustomPasswordChangeForm
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.views.generic import TemplateView
 
 
@@ -152,3 +152,7 @@ class User_Profile( TemplateView ):
         context["last_login"] = user.last_login
         return context
     
+
+class Change_Password( PasswordChangeView ):
+    form_class = CustomPasswordChangeForm
+    template_name = "accounts/change_password.html"
