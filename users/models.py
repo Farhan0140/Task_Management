@@ -3,11 +3,12 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-class User_Profile(models.Model):
-    user = models.ForeignKey(
+class UserProfile(models.Model):
+    user = models.OneToOneField(
         User, 
         on_delete=models.CASCADE,
         related_name="userprofile",
+        primary_key=True
     )
     user_image = models.ImageField(upload_to="user_images", blank=True)
     bio = models.TextField(blank=True)

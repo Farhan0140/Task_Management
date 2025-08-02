@@ -111,3 +111,39 @@ class CustomPasswordResetForm( Style_Form_Mixins, PasswordResetForm ):
 
 class CustomPasswordResetConfirmForm( Style_Form_Mixins, SetPasswordForm ):
     pass
+
+
+class Edit_Profile_Form(Style_Form_Mixins, forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['email', 'first_name', 'last_name']
+
+    user_image = forms.ImageField(required=False, label="User Image") 
+    bio = forms.CharField(
+        required=False,
+        widget = forms.Textarea,
+        label="Bio"
+    )
+
+    def __init__(self, *args, **kwargs):
+        self.userprofile = kwargs.pop('userprofile', None)
+        super().__init__(*args, **kwargs)
+
+        if self.userprofile:
+            self.fields['user_image'].initial = self.userprofile.user_image
+            self.fields['bio'].initial = self.userprofile.bio
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+
+        if self.userprofile:
+            self.userprofile.bio = self.cleaned_data.get('bio')
+            self.userprofile.user_image = self.cleaned_data.get('user_image')
+
+            if commit:
+                self.userprofile.save()
+
+        if commit:
+            user.save()
+
+        return user
