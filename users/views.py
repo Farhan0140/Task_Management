@@ -2,15 +2,17 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group
 from django.contrib.auth.tokens import default_token_generator
 from users.forms import CustomRegisterForm, CustomLoginForm, assignRoleForm, CreateGroupForm, CustomPasswordChangeForm, CustomPasswordResetForm, CustomPasswordResetConfirmForm, Edit_Profile_Form
-from users.models import UserProfile
+from users.models import Custom_User
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordResetView, PasswordResetConfirmView
 from django.views.generic import TemplateView, UpdateView
 from django.urls import reverse_lazy
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
 # Create your views here.
 
@@ -149,8 +151,8 @@ class User_Profile( TemplateView ):
         context["user_name"] = user.username
         context["full_name"] = user.get_full_name()
         context["email"] = user.email
-        context["bio"] = user.userprofile.bio
-        context["profile_image"] = user.userprofile.user_image
+        context["bio"] = user.bio
+        context["profile_image"] = user.profile_image
 
         context["date_joined"] = user.date_joined
         context["last_login"] = user.last_login
@@ -192,7 +194,7 @@ class Confirm_Reset_Password( PasswordResetConfirmView ):
         return super().form_valid(form)
     
 
-
+"""
 class Update_Profile( UpdateView ):
     model = User
     form_class = Edit_Profile_Form
@@ -212,6 +214,20 @@ class Update_Profile( UpdateView ):
         userprofile, created = UserProfile.objects.get_or_create(user=self.request.user)
         context['form'] = self.form_class(instance=self.object, userprofile=userprofile)
         return context
+    
+    def form_valid(self, form):
+        form.save(commit=True)
+        return redirect('user_profile')
+"""    
+
+class Update_Profile( UpdateView ):
+    model = User
+    form_class = Edit_Profile_Form
+    template_name = "accounts/update_profile.html"
+
+    def get_object(self):
+        return self.request.user
+    
     
     def form_valid(self, form):
         form.save(commit=True)

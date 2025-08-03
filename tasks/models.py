@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 
 class Employees(models.Model):
     name = models.CharField(max_length=100)
@@ -31,7 +31,7 @@ class Tasks(models.Model):
 
 
     assigned_to = models.ManyToManyField(
-        User,
+        settings.AUTH_USER_MODEL,
         related_name="tasks"
     )    # Many to Many Relationship
 
